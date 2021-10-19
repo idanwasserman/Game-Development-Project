@@ -8,19 +8,19 @@ public class GunShooting : MonoBehaviour
     public float range = 100f;
 
     public Camera fpsCam;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioSource gunSound;
+
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        
+        if (Input.GetButtonDown("Fire1"))
         {
+            gunSound.Play();
             Shoot();
         }
+
     }
 
     void Shoot()

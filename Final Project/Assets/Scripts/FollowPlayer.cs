@@ -21,7 +21,7 @@ public class FollowPlayer : MonoBehaviour
     {
         Vector3 newPosition = target.position;
         agent.SetDestination(target.position);
-        FaceTarget();
+        //FaceTarget();
     }
 
     void FaceTarget()

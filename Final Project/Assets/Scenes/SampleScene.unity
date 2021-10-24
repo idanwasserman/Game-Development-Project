@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 238695476}
   - component: {fileID: 238695480}
   m_Layer: 0
-  m_Name: Enemy Destination
+  m_Name: EnemyDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238695475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 414.31, y: 31.41, z: 593}
+  m_LocalPosition: {x: 544, y: 43.09, z: 486}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -308,6 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb78618194cf6f846a9d82b63b107e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minX: 150
+  maxX: 790
+  minZ: 230
+  maxZ: 750
 --- !u!1 &374860159
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,7 +911,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -931,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3b5df1bee96ff4daadbd2105097589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyDestination: {fileID: 238695475}
+  destination: {fileID: 238695475}
   lookRadius: 50
   enemyDistanceRun: 35
 --- !u!54 &873006976
@@ -1021,7 +1025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873006973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 414.044, y: 27.779, z: 550.3}
+  m_LocalPosition: {x: 414.044, y: 40.3, z: 580.91}
   m_LocalScale: {x: 0.75, y: 2.63, z: 0.58}
   m_Children:
   - {fileID: 1849081493}
@@ -1866,7 +1870,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506516906}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 411.89, y: 27.84, z: 547.89}
+  m_LocalPosition: {x: 412.99, y: 42.811, z: 570.09}
   m_LocalScale: {x: 1.13, y: 2.63, z: 0.98}
   m_Children:
   - {fileID: 840454213}
@@ -1883,7 +1887,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2105,7 +2109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631628465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 410.84, y: 28.16, z: 566.33}
+  m_LocalPosition: {x: 410.84, y: 42.696, z: 566.33}
   m_LocalScale: {x: 0.99, y: 2.51, z: 0.59}
   m_Children:
   - {fileID: 747733998}
@@ -2122,7 +2126,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 13
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2629,7 +2633,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067572527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 408.4, y: 28.16, z: 550.3}
+  m_LocalPosition: {x: 408.4, y: 43.884, z: 550.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1488320060}
@@ -2654,7 +2658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2067572528}
-  moveSpeed: 12
+  moveSpeed: 10
   gravity: -9.81
   groundCheck: {fileID: 374860160}
   groundDistance: 0.4

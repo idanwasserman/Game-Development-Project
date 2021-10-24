@@ -5,23 +5,24 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum EnemyState { Search, RunAway, Hunt };
-    public GameObject enemyDestination;
     Transform target;
     NavMeshAgent agent;
+    public GameObject destination;
+
+    public enum EnemyState { Search, RunAway, Hunt, CalculatePath };
 
     public float lookRadius = 50f;
     public float enemyDistanceRun = 35f;
-
+    
     public static int state;
 
     // Start is called before the first frame update
     void Start()
     {
-        state = 0; // search
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
 
+        state = 0; // search
     }
 
     // Update is called once per frame
@@ -48,7 +49,9 @@ public class EnemyController : MonoBehaviour
         {
             case (int) EnemyState.Search: // wander and search for weapons
                 {
-                    agent.SetDestination(enemyDestination.transform.position);
+
+                    agent.SetDestination(destination.transform.position);
+                    
                     break;
                 }
 
@@ -97,6 +100,7 @@ public class EnemyController : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
+
 
     private void OnDrawGizmosSelected()
     {

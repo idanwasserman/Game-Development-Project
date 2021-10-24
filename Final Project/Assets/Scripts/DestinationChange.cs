@@ -5,37 +5,20 @@ using UnityEngine.AI;
 
 public class DestinationChange : MonoBehaviour
 {
+    public float minX, maxX, minZ, maxZ;
+    private float x, y, z;
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.name == "MainEnemy")
+        if(other.tag == "Enemy")
         {
-            bool isDestWalkable = false;
+            x = Random.Range(minX, maxX);
+            z = Random.Range(minZ, maxZ);
 
-            while(! isDestWalkable)
-            {
-                float x, y, z;
+            y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z));
 
-                x = Random.Range(0, 1000);
-                z = Random.Range(0, 1000);
-
-                y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z));
-
-                Vector3 newDestination = new Vector3(x, y, z);
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(newDestination, out hit, 1f, NavMesh.AllAreas))
-                {
-                    this.gameObject.transform.position = new Vector3(x, y, z);
-                    isDestWalkable = true;
-                    Debug.Log("reachable");
-                }
-                else
-                {
-                    Debug.Log("not reachable");
-                }
-            }
-
+            transform.position = new Vector3(x, y, z);
+            Debug.Log("new dest: " + transform.position);
         }
     }
-
 }

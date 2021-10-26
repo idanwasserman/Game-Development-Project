@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    float enemiesCount = 2;
-    float playerTeamCount = 2;
+
+    public static float enemiesCount = 2;
+    public static float playerTeamCount = 2;
     public Text canvasText;
+
     public void gameOver()
     {
         Debug.Log("GAME OVER");

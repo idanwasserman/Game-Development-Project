@@ -10,15 +10,20 @@ public class GunShooting : MonoBehaviour
     public Camera fpsCam;
     public AudioSource gunSound;
 
+    public static bool gunInPlayersHand = false;
+
 
     // Update is called once per frame
     void Update()
     {
         
-        if (Input.GetButtonDown("Fire1"))
+        if (gunInPlayersHand)
         {
-            gunSound.Play();
-            Shoot();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                gunSound.Play();
+                Shoot();
+            }
         }
 
     }

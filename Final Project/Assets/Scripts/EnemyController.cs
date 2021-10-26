@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
     public GameObject destination;
 
-    public enum EnemyState { Search, RunAway, Hunt, CalculatePath };
+    public enum EnemyState { Wander, RunAway, Hunt };
 
     public float lookRadius = 50f;
     public float enemyDistanceRun = 35f;
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
         // doesnt need this 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            state = (int)EnemyState.Search;
+            state = (int)EnemyState.Wander;
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
 
         switch (state)
         {
-            case (int) EnemyState.Search: // wander and search for weapons
+            case (int) EnemyState.Wander: // wander in terrain
                 {
 
                     agent.SetDestination(destination.transform.position);
@@ -57,6 +57,16 @@ public class EnemyController : MonoBehaviour
 
             case (int)EnemyState.RunAway: // run away from player
                 {
+                    /*
+
+                    simple algorithm:
+                            wander in map
+                            if player in seeing radius:
+                                get away from player
+
+                    */
+
+
                     distance = Vector3.Distance(transform.position, target.transform.position);
                     
                     if(distance < enemyDistanceRun)
@@ -71,6 +81,20 @@ public class EnemyController : MonoBehaviour
 
             case (int)EnemyState.Hunt: // hunt the player
                 {
+                    /*
+                     
+                    simple algorithm:
+                            wander in map
+                            if player in seeing radius:
+                                if player in shooting radius:
+                                    face player
+                                    shoot player
+                                else:
+                                    get closer to player
+                     
+                     */
+
+
                     distance = Vector3.Distance(target.transform.position, transform.position);
 
                     if (distance <= lookRadius)

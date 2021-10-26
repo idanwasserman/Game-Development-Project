@@ -10,30 +10,71 @@ public class PickUpWeapon : MonoBehaviour
     public AudioSource sound;
     public Text canvasText;
 
+    private bool isBoxOpen = false;
+    private bool pickedUp = false;
+    public static bool inPickUpArea = false; 
+
+
+    private void Update()
+    {
+        if (!pickedUp && inPickUpArea)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, 100.0f))
+                {
+                    Debug.Log(hit.transform.name);
+                    if (hit.transform.gameObject.name == "AmmoBox")
+                    {
+                        ActivateWeapon(true);
+                    }
+                }
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.tag == "Weapon")
+        if (!pickedUp)
         {
-            sound.Play();
-            
-            if (this.tag == "Player")
+            if (other.tag == "Weapon")
             {
-                canvasText.text = "Hunt Down the Enemy";
-                EnemyController.state = (int) EnemyController.EnemyState.RunAway;
+                if (this.name == "MainEnemy")
+                {
+                    ActivateWeapon(false);
+                }
             }
-            else if (this.tag == "Enemy")
-            {
-                canvasText.text = "Run Away From Enemy";
-                EnemyController.state = (int) EnemyController.EnemyState.Hunt;
-            }
-
-            gunInHand.SetActive(true);
-            gunInTerrain.SetActive(false);
-            gunTrigger.SetActive(false);
         }
 
+    }
+
+    // bool b refers to which team activate the weapon
+    // true - player , false - enemy
+    private void ActivateWeapon(bool b)
+    {
+        pickedUp = true;
+        sound.Play();
+
+        if (b)
+        {
+            canvasText.text = "Hunt Down the Enemy";
+            EnemyController.state = (int)EnemyController.EnemyState.RunAway;
+            GunShooting.gunInPlayersHand = true;
+        }
+        else
+        {
+            canvasText.text = "Run Away From Enemy";
+            EnemyController.state = (int)EnemyController.EnemyState.Hunt;
+        }
+
+        gunInHand.SetActive(true);
+        gunInTerrain.SetActive(false);
+        gunTrigger.SetActive(false);
     }
 
 }

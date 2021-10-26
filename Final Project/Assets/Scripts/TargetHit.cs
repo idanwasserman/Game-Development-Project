@@ -10,8 +10,11 @@ public class TargetHit : MonoBehaviour
         if(health <= 0f)
         {
             if (this.tag == "Player")
-                FindObjectOfType<GameManager>().characterKilled(false);
-            
+            {
+                //FindObjectOfType<GameManager>().characterKilled(false);
+                GameManager.enemiesCount--;
+            }
+
             else
                 FindObjectOfType<GameManager>().characterKilled(true);
             Die();

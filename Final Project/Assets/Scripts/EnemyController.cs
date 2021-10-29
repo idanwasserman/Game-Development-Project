@@ -5,45 +5,53 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    Transform target;
+    Transform player;
     NavMeshAgent agent;
     public GameObject destination;
-
-    public enum EnemyState { Wander, RunAway, Hunt };
+    private AudioSource stepSound;
+    public enum EnemyState { Wander, RunAway, Hunt, Dead };
 
     public float lookRadius = 50f;
     public float enemyDistanceRun = 35f;
+    private float distance, x,lx,lz, z, stepLen = 0.1f;
     
     public static int state;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        target = PlayerManager.instance.player.transform;
+        player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
 
-        state = 0; // search
+        state = (int) EnemyState.Wander;
+        stepSound = GetComponent<AudioSource>();
+
+        lx = transform.position.x;
+        lz = transform.position.z;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distance;
 
-        // doesnt need this 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            state = (int)EnemyState.Wander;
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            state = (int)EnemyState.RunAway;
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            state = (int)EnemyState.Hunt;
-        }
-        // doesnt need above code
+        distance = Vector3.Distance(transform.position, player.transform.position);
+
+
+        /*        // doesnt need this 
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    state = (int)EnemyState.Wander;
+                }
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    state = (int)EnemyState.RunAway;
+                }
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    state = (int)EnemyState.Hunt;
+                }
+                // doesnt need above code*/
 
         switch (state)
         {
@@ -61,17 +69,17 @@ public class EnemyController : MonoBehaviour
 
                     simple algorithm:
                             wander in map
-                            if player in seeing radius:
+                            if CanSee(player):
                                 get away from player
 
                     */
 
 
-                    distance = Vector3.Distance(transform.position, target.transform.position);
+                    
                     
                     if(distance < enemyDistanceRun)
                     {
-                        Vector3 directionToPlayer = transform.position - target.transform.position;
+                        Vector3 directionToPlayer = transform.position - player.transform.position;
                         Vector3 newPosistion = transform.position + directionToPlayer;
                         agent.SetDestination(newPosistion);
                     }
@@ -84,22 +92,32 @@ public class EnemyController : MonoBehaviour
                     /*
                      
                     simple algorithm:
-                            wander in map
-                            if player in seeing radius:
-                                if player in shooting radius:
-                                    face player
-                                    shoot player
+                            
+                            if player not alive:
+                                if PlayersHelper not alive:    
+                                    gameOver
+                                else:
+                                    player = PlayersHelper
+
+                            wander randomly in map        
+                            if enemy CanSee(player):
+                                if player CanShoot(player):
+                                    FacePlayer
+                                    ShootPlayer
                                 else:
                                     get closer to player
                      
                      */
 
 
-                    distance = Vector3.Distance(target.transform.position, transform.position);
+
+
+                    // old code
+                    distance = Vector3.Distance(player.transform.position, transform.position);
 
                     if (distance <= lookRadius)
                     {
-                        agent.SetDestination(target.position);
+                        agent.SetDestination(player.position);
 
                         if (distance <= agent.stoppingDistance)
                         {
@@ -110,17 +128,44 @@ public class EnemyController : MonoBehaviour
 
                     break;
                 }
+            case (int)EnemyState.Dead: // enemy is dead
+                {
+                    /* 
+                     * 
+                     * set animation to DEAD
+                       if helper is alive:
+                            helper = main enemy
+                       else
+                            gameOver
+                     
+                    */
+
+                    break;
+                }
 
             default:
                 Debug.Log("EnemyController script - switch case is DEFAULT");
                 break;
         }
 
+        x = transform.position.x;
+        z = transform.position.z;
+        float dx = lx - x, dz = lz - z;
+
+        if (dx < -stepLen || dx > stepLen || dz < -stepLen || dz > stepLen)
+        {
+            if (!stepSound.isPlaying)
+            {
+                if (distance < 50)
+                    stepSound.Play();
+            }
+        }
+
     }
 
     void FaceTarget()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }

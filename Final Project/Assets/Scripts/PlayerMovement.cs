@@ -13,10 +13,13 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     bool isGrounded;
+    private AudioSource stepSound;
+    private float stepLen = 0.1f, x, z;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        stepSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,15 +32,20 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal");
+        z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-
         controller.Move(move * moveSpeed * Time.deltaTime);
-
         velocity.y += gravity * Time.deltaTime;
-
         controller.Move(velocity * Time.deltaTime);
+
+        if (x < -stepLen || x > stepLen || z < -stepLen || z > stepLen)
+        {
+            if (!stepSound.isPlaying)
+            {
+                stepSound.Play();
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
 
     public float lookRadius = 50f;
     public float enemyDistanceRun = 35f;
-    private float distance, x,lx,lz, z, stepLen = 0.1f;
+    private float distance, x, lx,  z, lz, stepLen = 0.1f;
     
     public static int state;
 
@@ -23,12 +23,14 @@ public class EnemyController : MonoBehaviour
     {
         player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
-
-        state = (int) EnemyState.Wander;
         stepSound = GetComponent<AudioSource>();
+        stepSound.maxDistance = 50;
+        stepSound.minDistance = 10;
 
+        state = (int)EnemyState.Wander;
         lx = transform.position.x;
         lz = transform.position.z;
+
     }
 
     // Update is called once per frame
@@ -156,8 +158,12 @@ public class EnemyController : MonoBehaviour
         {
             if (!stepSound.isPlaying)
             {
-                if (distance < 50)
+                if (distance < 100)
+                {
+                    
                     stepSound.Play();
+                }
+                    
             }
         }
 

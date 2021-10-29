@@ -10,7 +10,6 @@ public class PickUpWeapon : MonoBehaviour
     public AudioSource sound;
     public Text canvasText;
 
-    private bool isBoxOpen = false;
     private bool pickedUp = false;
     public static bool inPickUpArea = false; 
 
@@ -27,7 +26,7 @@ public class PickUpWeapon : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, 100.0f))
                 {
                     Debug.Log(hit.transform.name);
-                    if (hit.transform.gameObject.name == "AmmoBox")
+                    if (hit.transform.gameObject.name == "AmmoBox" && BoxMotion.isBoxOpen)
                     {
                         ActivateWeapon(true);
                     }

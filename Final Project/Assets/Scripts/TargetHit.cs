@@ -2,12 +2,22 @@ using UnityEngine;
 
 public class TargetHit : MonoBehaviour
 {
-    public float health = 50f;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
 
-    public void TakeDamage(float amountDamage)
+    private void Start()
     {
-        health -= amountDamage;
-        if(health <= 0f)
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
+    public void TakeDamage(int amountDamage)
+    {
+        currentHealth -= amountDamage;
+        healthBar.SetHealth(currentHealth);
+
+        if(currentHealth <= 0f)
         {
             if (this.tag == "Player")
             {

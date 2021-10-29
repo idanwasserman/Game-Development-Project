@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunShooting : MonoBehaviour
 {
-    public float damage = 10f;
+    public int damage = 10;
     public float range = 100f;
 
     public Camera fpsCam;

@@ -10,7 +10,8 @@ public class BoxMotion : MonoBehaviour
     public Text sideText;
     public AudioSource openSound, closeSound;
 
-    private bool isBoxOpen = false, triggered = false;
+    public static bool isBoxOpen = false;
+    private bool triggered = false;
 
 
     // Update is called once per frame
@@ -32,24 +33,7 @@ public class BoxMotion : MonoBehaviour
                 isBoxOpen = !isBoxOpen;
                 animator.SetBool("BoxIsOpenning", isBoxOpen);
             }
-            /*else if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-
-                if (!PickUpWeapon.pickedUp)
-                {
-                    if (Physics.Raycast(ray, out hit, 100.0f))
-                    {
-                        if (hit.transform.gameObject.name == "AmmoBox")
-                        {
-                            Debug.Log("pickupweapon");
-                        }
-                    }
-                }
-
-            }*/
         }
     }
 

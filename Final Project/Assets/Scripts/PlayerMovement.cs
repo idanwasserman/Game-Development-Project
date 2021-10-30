@@ -15,18 +15,18 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     private AudioSource stepSound;
     private float stepLen = 0.1f, x, z;
-
+/*
     public int maxHealth = 100;
     public int currentHealth;
-    public HealthBar healthBar;
+    public HealthBar healthBar;*/
 
     // Start is called before the first frame update
     void Start()
     {
         stepSound = GetComponent<AudioSource>();
 
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+/*        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);*/
     }
 
     // Update is called once per frame
@@ -55,13 +55,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+/*        if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
-        }
+        }*/
     }
 
-    public void TakeDamage(int amountDamage)
+/*    public void TakeDamage(int amountDamage)
     {
         currentHealth -= amountDamage;
         healthBar.SetHealth(currentHealth);
@@ -70,5 +70,5 @@ public class PlayerMovement : MonoBehaviour
         {
             // Player DIE
         }
-    }
+    }*/
 }

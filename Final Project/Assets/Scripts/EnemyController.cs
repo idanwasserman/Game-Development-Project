@@ -158,11 +158,11 @@ public class EnemyController : MonoBehaviour
         {
             if (!stepSound.isPlaying)
             {
-                if (distance < 100)
+/*                if (distance < 100)
                 {
                     
                     stepSound.Play();
-                }
+                }*/
                     
             }
         }

@@ -52,23 +52,24 @@ public class PickUpWeapon : MonoBehaviour
 
     }
 
-    // bool b refers to which team activate the weapon
+    // bool team refers to which team activate the weapon
     // true - player , false - enemy
-    private void ActivateWeapon(bool b)
+    private void ActivateWeapon(bool team)
     {
         pickedUp = true;
         sound.Play();
+        
 
-        if (b)
+        if (team)
         {
-            canvasText.text = "Hunt Down the Enemy";
-            EnemyController.state = (int)EnemyController.EnemyState.RunAway;
+            GameManager.instance.UpdateGameState(GameState.PlayerAttacks);
+            EnemyController.instance.UpdateEnemyState(EnemyState.RunAway);
             GunShooting.gunInPlayersHand = true;
         }
         else
         {
-            canvasText.text = "Run Away From Enemy";
-            EnemyController.state = (int)EnemyController.EnemyState.Hunt;
+            GameManager.instance.UpdateGameState(GameState.PlayerDefends);
+            EnemyController.instance.UpdateEnemyState(EnemyState.Hunt);
         }
 
         gunInHand.SetActive(true);

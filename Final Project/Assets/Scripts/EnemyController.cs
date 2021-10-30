@@ -5,17 +5,25 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    #region Singleton
+    public static EnemyController instance;
+    void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
     Transform player;
     NavMeshAgent agent;
     public GameObject destination;
     private AudioSource stepSound;
-    public enum EnemyState { Wander, RunAway, Hunt, Dead };
+    
 
     public float lookRadius = 50f;
     public float enemyDistanceRun = 35f;
     private float distance, x, lx,  z, lz, stepLen = 0.1f;
     
-    public static int state;
+    public static EnemyState state;
 
 
     // Start is called before the first frame update
@@ -27,7 +35,7 @@ public class EnemyController : MonoBehaviour
         stepSound.maxDistance = 50;
         stepSound.minDistance = 10;
 
-        state = (int)EnemyState.Wander;
+        state = EnemyState.Wander;
         lx = transform.position.x;
         lz = transform.position.z;
 
@@ -57,7 +65,7 @@ public class EnemyController : MonoBehaviour
 
         switch (state)
         {
-            case (int) EnemyState.Wander: // wander in terrain
+            case EnemyState.Wander: // wander in terrain
                 {
 
                     agent.SetDestination(destination.transform.position);
@@ -65,7 +73,7 @@ public class EnemyController : MonoBehaviour
                     break;
                 }
 
-            case (int)EnemyState.RunAway: // run away from player
+            case EnemyState.RunAway: // run away from player
                 {
                     /*
 
@@ -78,7 +86,7 @@ public class EnemyController : MonoBehaviour
 
 
                     
-                    
+                    // old code
                     if(distance < enemyDistanceRun)
                     {
                         Vector3 directionToPlayer = transform.position - player.transform.position;
@@ -89,7 +97,7 @@ public class EnemyController : MonoBehaviour
                     break;
                 }
 
-            case (int)EnemyState.Hunt: // hunt the player
+            case EnemyState.Hunt: // hunt the player
                 {
                     /*
                      
@@ -130,7 +138,7 @@ public class EnemyController : MonoBehaviour
 
                     break;
                 }
-            case (int)EnemyState.Dead: // enemy is dead
+            case EnemyState.Dead: // enemy is dead
                 {
                     /* 
                      * 
@@ -182,4 +190,17 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
+
+    public void UpdateEnemyState(EnemyState newState)
+    {
+        state = newState;
+    }
 }
+
+public enum EnemyState 
+{ 
+    Wander, 
+    RunAway, 
+    Hunt, 
+    Dead 
+};

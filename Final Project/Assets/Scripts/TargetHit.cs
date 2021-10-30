@@ -19,20 +19,15 @@ public class TargetHit : MonoBehaviour
 
         if(currentHealth <= 0f)
         {
-            if (this.tag == "Player")
-            {
-                //FindObjectOfType<GameManager>().characterKilled(false);
-                GameManager.enemiesCount--;
-            }
+            GameManager.instance.CharacterKilled(this.tag == "Enemy");
 
-            else
-                FindObjectOfType<GameManager>().characterKilled(true);
             Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // dead animation instead
     }
 }

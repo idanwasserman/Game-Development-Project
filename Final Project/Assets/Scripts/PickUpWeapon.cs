@@ -65,16 +65,20 @@ public class PickUpWeapon : MonoBehaviour
             GameManager.instance.UpdateGameState(GameState.PlayerAttacks);
             EnemyController.instance.UpdateEnemyState(EnemyState.RunAway);
             GunShooting.gunInPlayersHand = true;
+            NPCAnimatorController.gs = GunState.Player;
         }
         else
         {
             GameManager.instance.UpdateGameState(GameState.PlayerDefends);
             EnemyController.instance.UpdateEnemyState(EnemyState.Hunt);
+            NPCAnimatorController.gs = GunState.Enemy;
         }
 
         gunInHand.SetActive(true);
         gunInTerrain.SetActive(false);
         gunTrigger.SetActive(false);
+        
+        NPCAnimatorController.check = true;
     }
 
 }

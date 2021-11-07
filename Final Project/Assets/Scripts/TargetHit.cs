@@ -14,6 +14,9 @@ public class TargetHit : MonoBehaviour
 
     public void TakeDamage(int amountDamage)
     {
+        if (currentHealth <= 0)
+            return;
+
         currentHealth -= amountDamage;
         healthBar.SetHealth(currentHealth);
 

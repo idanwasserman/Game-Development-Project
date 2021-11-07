@@ -29,7 +29,7 @@ public class BoxMotion : MonoBehaviour
                 {
                     //openSound.Play(); // or playDelayed() if needed
                 }
-                Debug.Log("E pressed");
+
                 isBoxOpen = !isBoxOpen;
                 animator.SetBool("BoxIsOpenning", isBoxOpen);
             }
@@ -64,9 +64,5 @@ public class BoxMotion : MonoBehaviour
                 PickUpWeapon.inPickUpArea = false;
             }
         }
-
-
     }
-
-
 }

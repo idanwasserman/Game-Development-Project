@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class GameOverScreen : MonoBehaviour
 
     public void RestartButton()
     {
-        GameManager.instance.RestartGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void MainMenuButton()

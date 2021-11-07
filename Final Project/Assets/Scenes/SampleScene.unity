@@ -607,7 +607,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
       propertyPath: m_Name
-      value: Ch45_nonPBR@Idle
+      value: Ch45_SecondaryEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5211720267947752103, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2619,6 +2623,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &714764439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714764437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377e1ca2f9cdc3d41aed371c9927d095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &745551283
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,7 +2864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
       propertyPath: m_Name
-      value: Ch45_nonPBR@Idle
+      value: Ch45_PlayerHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
@@ -2941,7 +2961,7 @@ GameObject:
   - component: {fileID: 840454214}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3112,6 +3132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 238695475}
   lookRadius: 50
+  shootRadius: 50
   enemyDistanceRun: 35
 --- !u!54 &873006976
 Rigidbody:
@@ -5547,7 +5568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631628465}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -396.42, y: -198.83, z: 511.99817}
+  m_LocalPosition: {x: -396.42, y: -198.763, z: 511.99817}
   m_LocalScale: {x: 0.99, y: 2.51, z: 0.59}
   m_Children:
   - {fileID: 747733998}
@@ -5565,7 +5586,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 13
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -5649,6 +5670,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1635610359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635610357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377e1ca2f9cdc3d41aed371c9927d095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1677536219
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,6 +6138,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1781923625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781923623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377e1ca2f9cdc3d41aed371c9927d095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1797554604
 GameObject:
   m_ObjectHideFlags: 0
@@ -6221,7 +6266,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830102720}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1883515903}
+        m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
+        m_MethodName: RestartButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1830102720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6274,7 +6331,7 @@ GameObject:
   - component: {fileID: 1849081494}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7281,7 +7338,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
       propertyPath: m_Name
-      value: Ch45_nonPBR@Idle
+      value: Ch45_MainEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5211720267947752103, guid: e1daced57dc8fa7459dad065f4bd2362, type: 3}
       propertyPath: m_Materials.Array.data[0]

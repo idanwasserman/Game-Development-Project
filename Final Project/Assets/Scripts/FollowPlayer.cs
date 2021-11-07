@@ -19,8 +19,12 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 newPosition = target.position;
-        agent.SetDestination(target.position);
+        float x, y, z;
+        x = target.position.x;
+        z = target.position.z;
+        y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z));
+        Vector3 newPosition = new Vector3(x, y, z);
+        agent.SetDestination(newPosition);
         //FaceTarget();
     }
 

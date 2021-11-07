@@ -25,14 +25,6 @@ public class GameManager : MonoBehaviour
         state = GameState.Search;   
     }
 
-    public void RestartGame()
-    {
-        state = GameState.Search;
-        playerTeamCount = 2;
-        enemiesCount = 2;
-    }
-
-
     public void CharacterKilled(bool isEnemy)
     {
         if (isEnemy)
@@ -84,7 +76,6 @@ public class GameManager : MonoBehaviour
         EnemyController.instance.UpdateEnemyState(EnemyState.Wander);
         canvasText.text = "Find a Weapon";
         textBackground.color = new Color(0, 0, 0xff, textBackground.color.a);
-        
     }
 
     private void HandlePlayerAttacks()

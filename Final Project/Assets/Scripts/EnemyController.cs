@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,8 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
     public GameObject destination;
     private AudioSource stepSound;
-    
 
-    public float lookRadius = 50f;
+    public float lookRadius = 100f, shootRadius = 50f;
     public float enemyDistanceRun = 35f;
     private float distance, x, lx,  z, lz, stepLen = 0.1f;
     
@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
     {
         player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+
         stepSound = GetComponent<AudioSource>();
         stepSound.maxDistance = 50;
         stepSound.minDistance = 10;
@@ -75,67 +76,64 @@ public class EnemyController : MonoBehaviour
 
             case EnemyState.RunAway: // run away from player
                 {
-                    /*
 
-                    simple algorithm:
-                            wander in map
-                            if CanSee(player):
-                                get away from player
+                    agent.SetDestination(destination.transform.position);
 
-                    */
-
-
-                    
                     // old code
-                    if(distance < enemyDistanceRun)
+/*                    if (distance < enemyDistanceRun)
                     {
                         Vector3 directionToPlayer = transform.position - player.transform.position;
                         Vector3 newPosistion = transform.position + directionToPlayer;
                         agent.SetDestination(newPosistion);
-                    }
+                    }*/
 
                     break;
                 }
 
             case EnemyState.Hunt: // hunt the player
                 {
-                    /*
-                     
-                    simple algorithm:
-                            
-                            if player not alive:
-                                if PlayersHelper not alive:    
-                                    gameOver
-                                else:
-                                    player = PlayersHelper
 
-                            wander randomly in map        
-                            if enemy CanSee(player):
-                                if player CanShoot(player):
-                                    FacePlayer
-                                    ShootPlayer
-                                else:
-                                    get closer to player
-                     
-                     */
-
-
-
-
-                    // old code
-                    distance = Vector3.Distance(player.transform.position, transform.position);
-
-                    if (distance <= lookRadius)
+                    if (IsTargetInRange(lookRadius))
                     {
-                        agent.SetDestination(player.position);
-
-                        if (distance <= agent.stoppingDistance)
+                        // enemy can see the target
+                        if (IsTargetInRange(shootRadius))
                         {
-                            // attack target
+                            // enemy can shoot the target
                             FaceTarget();
+                            ShootTarget();
+                        }
+                        else
+                        {
+                            // enemy can't shoot the target
+                            agent.SetDestination(player.position);
                         }
                     }
+                    else
+                    {
+                        // enemy can't see the target
+                        agent.SetDestination(destination.transform.position);
+                    }
 
+
+                    /*
+
+simple algorithm:
+
+        if player not alive:
+            if PlayersHelper not alive:    
+                gameOver
+            else:
+                player = PlayersHelper
+
+        wander randomly in map        
+        if enemy CanSee(player):
+            if player CanShoot(player):
+                FacePlayer
+                ShootPlayer
+            else:
+                get closer to player
+
+ */
                     break;
                 }
             case EnemyState.Dead: // enemy is dead
@@ -177,6 +175,11 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    private void ShootTarget()
+    {
+        throw new NotImplementedException();
+    }
+
     void FaceTarget()
     {
         Vector3 direction = (player.position - transform.position).normalized;
@@ -194,6 +197,14 @@ public class EnemyController : MonoBehaviour
     public void UpdateEnemyState(EnemyState newState)
     {
         state = newState;
+    }
+
+    private bool IsTargetInRange(float radius)
+    {
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        if (distance <= radius)
+            return true;
+        return false;
     }
 }
 

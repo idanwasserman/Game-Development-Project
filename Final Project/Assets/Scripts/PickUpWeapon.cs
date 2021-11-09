@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PickUpWeapon : MonoBehaviour
 {
 
-    public GameObject gunInHand, gunInTerrain, gunTrigger;
+    public GameObject gunInHand, gunInHelperHand, gunInTerrain, gunTrigger;
     public AudioSource sound;
     public Text canvasText;
 
@@ -76,6 +76,7 @@ public class PickUpWeapon : MonoBehaviour
         }
 
         gunInHand.SetActive(true);
+        gunInHelperHand.SetActive(true);
         gunInTerrain.SetActive(false);
         gunTrigger.SetActive(false);
         

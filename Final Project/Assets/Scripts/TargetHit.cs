@@ -30,7 +30,19 @@ public class TargetHit : MonoBehaviour
 
     void Die()
     {
-        gameObject.SetActive(false);
+       // gameObject.SetActive(false);
+       
+        if (gameObject.name == "Player")
+            GameManager.instance.GameOver();
+        else
+        {
+            NPCAnimatorController.nameToKill = gameObject.name;
+            NPCAnimatorController.toKill = true;
+            if(name == "MainEnemy")
+            {
+                EnemyController.instance.UpdateEnemyState(EnemyState.Dead);
+            }
+        }
         // dead animation instead
     }
 }

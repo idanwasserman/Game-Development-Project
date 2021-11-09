@@ -13,11 +13,14 @@ public class NPCAnimatorController : MonoBehaviour
     private bool isMoving;
     public static GunState gs = GunState.None;
     public static bool check = false;
+    public static string nameToKill;
+    public static bool toKill = false;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        nameToKill = "";
     }
 
     public bool IsMoving
@@ -37,18 +40,19 @@ public class NPCAnimatorController : MonoBehaviour
     void Update()
     {
 
-        if (check && gs != GunState.None)
-        {
+        if (gs != GunState.None && check)
+        { 
+            Debug.Log("IN Check " + gs + " " + tag);
             if (gs == GunState.Player && tag == "Player")
             {
                 animator.SetBool("hasGun", true);
+
             }
             else if (gs == GunState.Enemy && tag == "Enemy")
             {
                 animator.SetBool("hasGun", true);
             }
             
-            check = false;
         }
 
 
@@ -84,7 +88,17 @@ public class NPCAnimatorController : MonoBehaviour
                 isMoving = false;
             }
         }
+
+        if (toKill)
+        {
+            if (name == nameToKill)
+            {
+                animator.SetBool("isDying", true);
+                toKill = false;
+            }
+        }
     }
+
 
 }
 

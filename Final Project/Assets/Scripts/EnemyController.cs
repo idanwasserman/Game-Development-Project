@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyController : MonoBehaviour
 {
     #region Singleton
@@ -17,7 +18,9 @@ public class EnemyController : MonoBehaviour
     Transform player;
     NavMeshAgent agent;
     public GameObject destination;
+    public GameObject p;
     private AudioSource stepSound;
+    private AudioSource shootingSound;
 
     public float lookRadius = 100f, shootRadius = 50f;
     public float enemyDistanceRun = 35f;
@@ -32,9 +35,9 @@ public class EnemyController : MonoBehaviour
         player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
 
-        stepSound = GetComponent<AudioSource>();
-        stepSound.maxDistance = 50;
-        stepSound.minDistance = 10;
+        shootingSound = GetComponent<AudioSource>();
+        //stepSound.maxDistance = 50;
+       // stepSound.minDistance = 10;
 
         state = EnemyState.Wander;
         lx = transform.position.x;
@@ -147,7 +150,7 @@ simple algorithm:
                             gameOver
                      
                     */
-
+                    agent.Stop();
                     break;
                 }
 
@@ -162,7 +165,7 @@ simple algorithm:
 
         if (dx < -stepLen || dx > stepLen || dz < -stepLen || dz > stepLen)
         {
-            if (!stepSound.isPlaying)
+          //  if (!stepSound.isPlaying)
             {
 /*                if (distance < 100)
                 {
@@ -177,7 +180,23 @@ simple algorithm:
 
     private void ShootTarget()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        if(!shootingSound.isPlaying)
+            shootingSound.Play();
+        System.Random rnd = new System.Random();
+        int hitRandNum = rnd.Next(0, 3);
+
+        if(hitRandNum == 1)
+        {
+            TargetHit target = p.GetComponent<TargetHit>();
+
+            if (target != null)
+            {
+                target.TakeDamage(1);
+            }
+        }
+        
+        
     }
 
     void FaceTarget()

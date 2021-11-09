@@ -7,6 +7,7 @@ public class FollowPlayer : MonoBehaviour
 {
 
     public Transform target;
+    public Rigidbody playerRb;
     NavMeshAgent agent;
     
 
@@ -24,7 +25,8 @@ public class FollowPlayer : MonoBehaviour
         z = target.position.z;
         y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z));
         Vector3 newPosition = new Vector3(x, y, z);
-        agent.SetDestination(newPosition);
+        if(playerRb.velocity.magnitude > 1f)
+            agent.SetDestination(newPosition);
         //FaceTarget();
     }
 

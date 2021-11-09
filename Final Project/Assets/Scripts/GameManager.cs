@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         textBackground.color = new Color(0xff, 0, 0, textBackground.color.a);
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         Debug.Log("GAME OVER");
 

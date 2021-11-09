@@ -66,6 +66,7 @@ public class PickUpWeapon : MonoBehaviour
             EnemyController.instance.UpdateEnemyState(EnemyState.RunAway);
             GunShooting.gunInPlayersHand = true;
             NPCAnimatorController.gs = GunState.Player;
+
         }
         else
         {

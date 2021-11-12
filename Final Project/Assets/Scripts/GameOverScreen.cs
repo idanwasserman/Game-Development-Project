@@ -22,11 +22,12 @@ public class GameOverScreen : MonoBehaviour
 
     public void RestartButton()
     {
+        PickUpWeapon.SetPickedUp(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void MainMenuButton()
     {
-
+        // TODO or delete
     }
 }

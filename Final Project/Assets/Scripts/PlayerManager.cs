@@ -14,4 +14,11 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     public GameObject player;
+
+    private bool isDead = false;
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
 }

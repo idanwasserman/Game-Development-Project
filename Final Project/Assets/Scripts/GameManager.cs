@@ -96,6 +96,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GAME OVER");
 
+        EnemyController.instance.Stop();
+
+        StartCoroutine(DelayGameOver(3f));
+    }
+
+    IEnumerator DelayGameOver(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+
         gameOverScreen.Setup(enemiesCount == 0);
     }
 }
@@ -106,4 +115,13 @@ public enum GameState
     PlayerAttacks,
     PlayerDefends,
     GameOver
+}
+
+public enum AnimationStates
+{
+    Walking,
+    Running,
+    PistolWalking,
+    PistolRunning,
+    Dead
 }

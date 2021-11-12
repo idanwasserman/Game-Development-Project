@@ -15,8 +15,7 @@ public class GunShooting : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {   
         if (gunInPlayersHand)
         {
             if (Input.GetButtonDown("Fire1"))
@@ -25,21 +24,20 @@ public class GunShooting : MonoBehaviour
                 Shoot();
             }
         }
-
     }
 
     void Shoot()
     {
         RaycastHit hit;
-        if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
-
             TargetHit target = hit.transform.GetComponent<TargetHit>();
 
             if(target != null)
             {
                 target.TakeDamage(damage);
+
+                HelperController.instance.ShootTarget(target, damage / 2);
             }
         }
     }

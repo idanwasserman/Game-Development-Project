@@ -29,20 +29,25 @@ public class TargetHit : MonoBehaviour
     }
 
     void Die()
-    {
-       // gameObject.SetActive(false);
-       
-        if (gameObject.name == "Player")
+    {      
+        if (name == "Player")
+        {
             GameManager.instance.GameOver();
+        }
         else
         {
-            NPCAnimatorController.nameToKill = gameObject.name;
-            NPCAnimatorController.toKill = true;
-            if(name == "MainEnemy")
+            if (name == "PlayerHelper")
+            {
+                HelperController.instance.Kill();
+            }
+            else if (name == "MainEnemy")
             {
                 EnemyController.instance.UpdateEnemyState(EnemyState.Dead);
             }
+            else if (name == "SecondaryEnemy")
+            {
+                SecondaryEnemyController.instance.Kill();
+            }
         }
-        // dead animation instead
     }
 }

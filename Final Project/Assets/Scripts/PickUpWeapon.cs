@@ -10,7 +10,7 @@ public class PickUpWeapon : MonoBehaviour
     public AudioSource sound;
     public Text canvasText;
 
-    private bool pickedUp = false;
+    private static bool pickedUp = false;
     public static bool inPickUpArea = false; 
 
 
@@ -35,10 +35,13 @@ public class PickUpWeapon : MonoBehaviour
         }
     }
 
+    public static void SetPickedUp(bool b)
+    {
+        pickedUp = b;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        
         if (!pickedUp)
         {
             if (other.tag == "Weapon")
@@ -49,7 +52,6 @@ public class PickUpWeapon : MonoBehaviour
                 }
             }
         }
-
     }
 
     // bool team refers to which team activate the weapon
@@ -59,18 +61,18 @@ public class PickUpWeapon : MonoBehaviour
         pickedUp = true;
         sound.Play();
         
-
         if (team)
         {
             GameManager.instance.UpdateGameState(GameState.PlayerAttacks);
             EnemyController.instance.UpdateEnemyState(EnemyState.RunAway);
+            HelperController.instance.EquipGun();
             GunShooting.gunInPlayersHand = true;
-            NPCAnimatorController.gs = GunState.Player;
-
         }
         else
         {
             GameManager.instance.UpdateGameState(GameState.PlayerDefends);
+            EnemyController.instance.EquipGun();
+            SecondaryEnemyController.instance.EquipGun();
             EnemyController.instance.UpdateEnemyState(EnemyState.Hunt);
             NPCAnimatorController.gs = GunState.Enemy;
         }
@@ -79,8 +81,5 @@ public class PickUpWeapon : MonoBehaviour
         gunInHelperHand.SetActive(true);
         gunInTerrain.SetActive(false);
         gunTrigger.SetActive(false);
-        
-        NPCAnimatorController.check = true;
     }
-
 }

@@ -5,12 +5,11 @@ using UnityEngine;
 public class NPCAnimatorController : MonoBehaviour
 {
     private Animator animator;
-    //private Transform objectTransfom;//Set this to the transform you want to check
-
-    private float noMovementThreshold = 0.05f, walkingThreshold = 0.25f;
+    private float noMovementThreshold = 0.025f;
     private const int noMovementFrames = 3;
     Vector3[] previousLocations = new Vector3[noMovementFrames];
     private bool isMoving;
+
     public static GunState gs = GunState.None;
     public static bool check = false;
     public static string nameToKill;
@@ -70,21 +69,16 @@ public class NPCAnimatorController : MonoBehaviour
         {
             float distance = Vector3.Distance(previousLocations[i], previousLocations[i + 1]);
 
-            if (distance >= walkingThreshold)
+            if (distance >= noMovementThreshold)
             {
                 //The minimum movement has been detected between frames
-                animator.SetInteger("States", (int)States.Running);
+                animator.SetInteger("States", (int)AnimationStates.Running);
                 isMoving = true;
                 break;
             }
-            else if (distance >= noMovementThreshold)
-            {
-                animator.SetInteger("States", (int)States.Walking);
-                isMoving = true;
-            }
             else
             {
-                animator.SetInteger("States", (int)States.Idle);
+                animator.SetInteger("States", (int)AnimationStates.Walking);
                 isMoving = false;
             }
         }
@@ -98,8 +92,6 @@ public class NPCAnimatorController : MonoBehaviour
             }
         }
     }
-
-
 }
 
 public enum States

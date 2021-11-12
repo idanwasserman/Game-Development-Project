@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class FollowPlayer : MonoBehaviour
 {
-
+    NavMeshAgent agent;
     public Transform target;
     public Rigidbody playerRb;
-    NavMeshAgent agent;
+    
     
 
     // Start is called before the first frame update

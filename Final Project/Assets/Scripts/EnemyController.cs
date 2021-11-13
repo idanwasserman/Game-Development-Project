@@ -21,18 +21,19 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 
-
+    private float time = 0f;
     private bool isDead = false, stop = false;
 
-    Transform player;
-    NavMeshAgent agent;
+    private Transform player;
+    private NavMeshAgent agent;
     public GameObject destination;
     public GameObject p;
     private AudioSource stepSound;
     
 
     public float lookRadius = 100f, shootRadius = 50f;
-    public int damage = 10, hitRatio = 10;
+    public int damage = 10;
+    public int hitRatio = 10;
     public float delayTime = 2.5f;
     public float enemyDistanceRun = 35f;
     private float distance, x, lx,  z, lz, stepLen = 0.1f;
@@ -70,6 +71,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
+
         if (isDead || stop)
         {
             return;
@@ -162,7 +165,7 @@ public class EnemyController : MonoBehaviour
         agent.SetDestination(destination.transform.position);
     }
 
-    private void HuntPlayer()
+    public void HuntPlayer()
     {
         if (IsTargetInRange(lookRadius))
         {
@@ -171,7 +174,13 @@ public class EnemyController : MonoBehaviour
             {
                 // enemy can shoot the target
                 FaceTarget();
-                ShootTarget();
+                SecondaryEnemyController.instance.FaceTarget();
+
+                if (time >= 2f)
+                {
+                    time = 0f;
+                    ShootTarget();
+                }
             }
             else
             {
@@ -200,19 +209,17 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator DelayShoot(float delayTime)
     {
-        //Debug.Log("before yield");
+        //yield return new WaitForSeconds(delayTime);
+
+        System.Random rnd = new System.Random();
+        int hitRandNum = rnd.Next(0, hitRatio);
+
         yield return new WaitForSeconds(delayTime);
-        //Debug.Log("after yield");
 
         if (!shootingSound.isPlaying)
         {
             shootingSound.Play();
         }
-
-        System.Random rnd = new System.Random();
-        int hitRandNum = rnd.Next(0, hitRatio);
-        Debug.Log("enemy: " + hitRandNum);
-
         if (hitRandNum == 1)
         {
             TargetHit target = p.GetComponent<TargetHit>();
@@ -220,10 +227,12 @@ public class EnemyController : MonoBehaviour
             if (target != null)
             {
                 target.TakeDamage(damage);
-
+                Debug.Log(damage + " damage");
                 SecondaryEnemyController.instance.ShootTarget(target, damage / 2);
             }
         }
+
+        yield return new WaitForSeconds(delayTime);
     }
 
     private void SetAnimation()

@@ -21,10 +21,12 @@ public class SecondaryEnemyController : MonoBehaviour
     #endregion
 
     public float delayTime = 1.5f;
+    public int hitRatio = 10;
     private bool isDead = false;
 
     // shooting
     private AudioSource gunSound;
+    private Transform player;
 
     // animations variables
     private Animator animator;
@@ -42,6 +44,7 @@ public class SecondaryEnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = PlayerManager.instance.player.transform;
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         gunSound = GetComponent<AudioSource>();
@@ -77,15 +80,17 @@ public class SecondaryEnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
 
+        FaceTarget();
+        if (!gunSound.isPlaying)
+        {
+            gunSound.Play();
+        }
         System.Random rnd = new System.Random();
-        int hitRandNum = rnd.Next(0, 5);
-
-        gunSound.Play();
-        Debug.Log("2nd enemy: " + hitRandNum);
-
+        int hitRandNum = rnd.Next(0, hitRatio);
         if (hitRandNum == 1)
         {
             target.TakeDamage(damage);
+            Debug.Log(damage + " damage");
         }
     }
 
@@ -166,5 +171,12 @@ public class SecondaryEnemyController : MonoBehaviour
     public void EquipGun()
     {
         hasGun = true;
+    }
+
+    public void FaceTarget()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 }

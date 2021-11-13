@@ -22,6 +22,7 @@ public class HelperController : MonoBehaviour
 
     public float delayTime = 1.5f;
     private bool isDead = false;
+    public int hitRatio = 10;
 
     // shooting
     private AudioSource gunSound;
@@ -78,10 +79,12 @@ public class HelperController : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         System.Random rnd = new System.Random();
-        int hitRandNum = rnd.Next(0, 3);
+        int hitRandNum = rnd.Next(0, hitRatio);
 
-        gunSound.Play();
-        Debug.Log(hitRandNum);
+        if (!gunSound.isPlaying)
+        {
+            gunSound.Play();
+        }
 
         if (hitRandNum == 1)
         {

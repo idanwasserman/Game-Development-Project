@@ -42,7 +42,7 @@ public class TargetHit : MonoBehaviour
             }
             else if (name == "MainEnemy")
             {
-                EnemyController.instance.UpdateEnemyState(EnemyState.Dead);
+                EnemyController.instance.Kill();
             }
             else if (name == "SecondaryEnemy")
             {

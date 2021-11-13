@@ -39,7 +39,7 @@ public class SecondaryEnemyController : MonoBehaviour
     // follow player variables
     private NavMeshAgent agent;
     public Transform target;
-    //public GameObject destination;
+    public GameObject destination;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +66,7 @@ public class SecondaryEnemyController : MonoBehaviour
         }
         else
         {
-            //agent.SetDestination(destination.transform.position);
+            agent.SetDestination(destination.transform.position);
         }
 
     }

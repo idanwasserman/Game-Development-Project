@@ -29,7 +29,7 @@ public class HelperController : MonoBehaviour
 
     // animations variables
     private Animator animator;
-    private float noMovementThreshold = 0.025f;
+    public float noMovementThreshold = 0.005f;
     private const int noMovementFrames = 3;
     Vector3[] previousLocations = new Vector3[noMovementFrames];
     private bool isMoving;

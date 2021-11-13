@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
         EnemyController.instance.Stop();
 
-        StartCoroutine(DelayGameOver(1.25f));
+        StartCoroutine(DelayGameOver(2f));
     }
 
     IEnumerator DelayGameOver(float delayTime)

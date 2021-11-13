@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 
+    private GameObject currentTarget;
+
     private float time = 0f;
     private bool isDead = false, stop = false;
 
@@ -124,7 +126,7 @@ public class EnemyController : MonoBehaviour
                 break;
 
             case EnemyState.Dead: // enemy is dead
-                Die();
+                //Die();
                 break;
 
             default:
@@ -133,11 +135,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Kill()
     {
-        isDead = true;
-        agent.enabled = false;
         animator.SetInteger("States", (int)AnimationStates.Dead);
+        isDead = true;
+        UpdateEnemyState(EnemyState.Dead);
+        agent.enabled = false;
     }
 
     public void UpdateEnemyState(EnemyState newState)
@@ -147,7 +150,7 @@ public class EnemyController : MonoBehaviour
 
     private bool IsTargetInRange(float radius)
     {
-        float distance = Vector3.Distance(player.transform.position, transform.position);
+        float distance = Vector3.Distance(currentTarget.transform.position, transform.position);
         if (distance <= radius)
         {
             return true;
@@ -167,6 +170,15 @@ public class EnemyController : MonoBehaviour
 
     public void HuntPlayer()
     {
+        if (HelperController.instance.IsDead())
+        {
+            currentTarget = PlayerManager.instance.gameObject;
+        }
+        else
+        {
+            currentTarget = HelperController.instance.gameObject;
+        }
+
         if (IsTargetInRange(lookRadius))
         {
             // enemy can see the target
@@ -185,7 +197,7 @@ public class EnemyController : MonoBehaviour
             else
             {
                 // enemy can't shoot the target
-                agent.SetDestination(player.position);
+                agent.SetDestination(currentTarget.transform.position);
             }
         }
         else
@@ -197,7 +209,7 @@ public class EnemyController : MonoBehaviour
 
     private void FaceTarget()
     {
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
@@ -222,7 +234,7 @@ public class EnemyController : MonoBehaviour
         }
         if (hitRandNum == 1)
         {
-            TargetHit target = p.GetComponent<TargetHit>();
+            TargetHit target = currentTarget.GetComponent<TargetHit>();
 
             if (target != null)
             {

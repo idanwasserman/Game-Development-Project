@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -20,14 +21,12 @@ public class GameOverScreen : MonoBehaviour
         }
     }
 
-    public void RestartButton()
-    {
-        PickUpWeapon.SetPickedUp(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+
 
     public void MainMenuButton()
     {
-        // TODO or delete
+
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

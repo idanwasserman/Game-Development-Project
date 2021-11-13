@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TargetHit : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public static int maxHealth = 100;
+    private int currentHealth;
     public HealthBar healthBar;
 
     private void Start()
@@ -49,5 +49,10 @@ public class TargetHit : MonoBehaviour
                 SecondaryEnemyController.instance.Kill();
             }
         }
+    }
+
+    public void SetCurrentHealth(int health)
+    {
+        currentHealth = health;
     }
 }

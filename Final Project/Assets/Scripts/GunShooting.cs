@@ -18,7 +18,8 @@ public class GunShooting : MonoBehaviour
     {   
         if (gunInPlayersHand)
         {
-            if (Input.GetButtonDown("Fire1"))
+            //if (Input.GetButtonDown("Fire1"))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 gunSound.Play();
                 Shoot();

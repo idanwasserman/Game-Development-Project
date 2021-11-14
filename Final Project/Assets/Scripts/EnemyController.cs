@@ -172,7 +172,7 @@ public class EnemyController : MonoBehaviour
     {
         if (HelperController.instance.IsDead())
         {
-            currentTarget = PlayerManager.instance.gameObject;
+            currentTarget = player.gameObject;
         }
         else
         {
